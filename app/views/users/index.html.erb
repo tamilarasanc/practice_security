@@ -1,0 +1,21 @@
+
+<h1>Users List</h1>
+
+<table>
+  <% if !@users.blank? %>
+ <% @users.each do |user|  %>
+ <tr>
+  <td><%= user.name %></td>
+  <td><%= user.email %></td>
+   <td><%= link_to 'Show', user_path(user) %></td>
+   <td><%= link_to 'Edit', edit_user_path(user) %></td>
+   <td><%= link_to 'Destroy', user_path(user),
+                   method: :delete,
+                   data: { confirm: 'Are you sure?' } %></td>
+ </tr>
+<% end %>
+<% end %>
+</table>
+
+<%= link_to 'New user', new_user_path %>
+<%= link_to 'Log out', logout_path(session[:user_id]) %>

@@ -1,0 +1,26 @@
+<style>
+  .red{
+    color : red;
+  }
+</style>
+
+<h1>Login</h1>
+<div class="red">
+<%= flash[:notice] if flash[:notice] %>
+</div>
+<%= form_tag('/login/verify_login') %>
+
+<p>
+  <%= label_tag("Email:") %>
+  <%= text_field_tag(:email) %>
+</p>
+
+<p>
+  <%= label_tag("password:") %>
+  <%= password_field_tag(:password) %>
+</p>
+
+<p>
+  <%= submit_tag %>
+</p>
+
