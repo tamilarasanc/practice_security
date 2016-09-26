@@ -1,11 +1,22 @@
 Rails.application.routes.draw do
 
-  resources :users
+  #get 'users/update_password/:id' => 'users#update_password',as: :update_password
+  #resources :users
 
-  get 'login/logout/:id' => 'login#logout',as: :logout
-  post 'login/verify_login'
+   resources :admin do
+     get 'add_admin_or_remove_admin' , :on => :collection
+   end
+   patch 'admin/update/:id' => 'admin#update'
+   get 'users/show/:id' => 'users#show',as: :show_user,:id=>/\d+/
+   get 'users/edit/:id'  => 'users#edit', as: :edit_user,:id=>/\d+/
+   get 'users/change_password/:id' => 'users#change_password',as: :change_password,:id=>/\d+/
+   post 'users/update/:id' => 'users#update'
+   post 'users/update_password/:id' => 'users#update_password',as: :update_password,:id=>/\d+/
+   get 'login/logout/:id' => 'login#logout',as: :logout
+   post 'login/verify_login'
 
-  root 'login#login'
+
+   root 'login#login'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

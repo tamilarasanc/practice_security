@@ -28,8 +28,6 @@
   <%= @user.description %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %>|
-<%= link_to 'Back', show_user_path(@user) %>|
-<%= link_to 'Log out', logout_path(session[:user_id]) %>|
-<%= link_to 'Change Password', change_password_path(session[:user_id]) %>
+<%= link_to 'Edit', edit_admin_path(@user) %>|
+<%= link_to 'Back', admin_index_path %>
 

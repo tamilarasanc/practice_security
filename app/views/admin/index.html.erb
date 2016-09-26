@@ -1,0 +1,94 @@
+<style>
+  .red{
+    color : red;
+  }
+    .password{
+      display:none;
+    }
+</style>
+<h1>Users List</h1>
+<div class="red">
+  <%= flash[:notice] if flash[:notice] %>
+</div>
+<table>
+  <% if !@users.blank? %>
+      <% @users.each do |user|  %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= link_to 'Show', admin_path(user) %></td>
+            <td><%= link_to 'Edit', edit_admin_path(user) %></td>
+            <td><%= link_to 'Destroy', admin_path(user),
+                            method: :delete,
+                            data: { confirm: 'Are you sure?' } %></td>
+            <td>
+              <%= link_to user.admin ? "Admin" : "User" ,'javascript:;'%>
+              <%#= link_to user.admin ? "Remove Admin" : "Add Admin" ,'javascript:;', class: "admin_make" ,value:user.id%></td>
+            <!--<td><%#= link_to 'change password' ,'javascript:;' , class: "change_password", value:user.id %><%#= text_field "pass" , "" ,class: "password"%></td>-->
+
+          </tr>
+      <% end %>
+  <% end %>
+</table>
+
+<%= link_to 'New user', new_admin_path %> |
+<%= link_to 'Log out', logout_path(session[:user_id]) %>
+
+<script>
+
+  $('.admin_make').click(function(){
+
+      var a = $(this).attr('value');
+    var b = $(this).text();
+      alert(a);
+      alert(b);
+
+        $.ajax({
+
+          type: "GET",
+          url: '/admin/add_admin_or_remove_admin?&user_id=' + a ,
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+          },
+          dataType : "html",
+          success: function (data) {
+
+          }
+        });
+
+
+  });
+
+  $('.change_password').click(function() {
+
+    $(this).hide();
+    $(this).next('.password').show();
+  });
+
+  $('.password').change(function() {
+
+
+    var a = $(this).val();
+    var b = $(this).closest('.change_password').val();
+    alert(a);
+    alert(b);
+
+
+//    $.ajax({
+//
+//      type: "GET",
+//      url: '/admin/change_password?&user_id=' + a ,
+//      beforeSend: function (xhr) {
+//        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+//      },
+//      dataType : "html",
+//      success: function (data) {
+//
+//
+//      }
+//    });
+  });
+
+
+
+</script>

@@ -6,7 +6,11 @@ class ApplicationController < ActionController::Base
 
   def check_session
     if !session[:user_id].blank?
-      flash[:notice] = "Logged in as #{User.find_by_id(session[:user_id]).name}"
+      user = User.find_by_id(session[:user_id])
+     if user.id != session[:user_id]
+      redirect_to root_path
+      flash[:notice] = "No user Present"
+     end
     else
       redirect_to root_path
       flash[:notice] = "Login First"
@@ -15,9 +19,13 @@ class ApplicationController < ActionController::Base
 
 
   def admin_session
-    if session[:user_id] and session[:role]
-      flash[:notice] = "Logged in as  Administrator#{User.find_by_id(session[:user_id])}"
-     else
+    if session[:role]
+      user = User.find_by_id(session[:user_id])
+      if user.blank?
+      redirect_to root_path
+      flash[:notice] = "No user Present"
+      end
+      else
       redirect_to root_path
       flash[:notice] = "you are not admin"
     end
