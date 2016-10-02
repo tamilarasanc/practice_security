@@ -32,9 +32,16 @@ class AdminController < ApplicationController
   def update
     @user = User.find_by_id(params[:id])
     if !@user.blank?
+      admin_value = @user.admin
       @user.update_user(user_params)
       redirect_to admin_index_path
+      if params[:user][:admin] == "1" and admin_value == false
+        flash[:notice] = "User is upgraded from Normal user to admin"
+      elsif params[:user][:admin] == "0" and admin_value == true
+        flash[:notice] = "User is downgraded from Admin to Normal User"
+      else
       flash[:notice] = "Updated Succesfully"
+      end
     else
       render 'edit'
     end
