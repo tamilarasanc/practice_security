@@ -9,6 +9,17 @@ development:
   password: tamil
   port: 5432
 
+test:
+  adapter: postgresql
+  encoding: utf-8
+  database: security_app_test
+  host: localhost
+  username: tamilarasan
+  password: tamil
+  port: 5432
+
+
+
 
 production:
   adapter: postgresql
