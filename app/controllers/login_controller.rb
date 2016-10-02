@@ -7,13 +7,14 @@ class LoginController < ApplicationController
   end
 
   def verify_login
+
     @user = User.where("email =? and password =?",params[:email],params[:password]).last
     if !@user.blank?
       if @user.admin == true
          redirect_to admin_index_path
         session[:user_id] = @user.id
          session[:role] = @user.admin
-         flash[:notice] = "Logged in as  Administrator#{@user.name} , you can edit , vied and modify others profile"
+         flash[:notice] = "Logged in as Administrator, you can edit , view and modify others profile"
       else
         session[:user_id] = @user.id
         redirect_to show_user_path(session[:user_id])
@@ -33,6 +34,7 @@ class LoginController < ApplicationController
   def logout
     reset_session
     redirect_to :action => 'login'
+    flash[:notice] = "logged out successfully"
   end
 
 end

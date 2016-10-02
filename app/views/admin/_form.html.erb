@@ -1,6 +1,26 @@
+<style>
+  .red{
+    color : red;
+  }
 
+</style>
+<div class="red">
+  <%= flash[:notice] if flash[:notice] %>
+</div>
 <%= form_for  @user ,  url: { action: "create" }, method: :post do |f|  %>
-
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@user.errors.count, "error") %> prohibited
+            this article from being saved:
+          </h2>
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
     <p>
       <%= f.label :name %><br>
       <%= f.text_field :name %>
@@ -10,10 +30,10 @@
       <%= f.label :email %><br>
       <%= f.text_field :email %>
     </p>
-    <!--<p>-->
-      <%#= f.label :password %>
-      <!--<%#= f.password_field :password %>-->
-    <!--</p>-->
+    <p>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </p>
 
     <p>
       <%= f.label :description %><br>

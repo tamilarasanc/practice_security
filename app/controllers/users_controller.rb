@@ -19,7 +19,7 @@ class UsersController < ApplicationController
    def update
      @user = User.find_by_id(params[:id])
      if !@user.blank?
-       @user.update(user_params)
+       @user.update_user(user_params)
        if session[:user_id] == @user.id
        flash[:notice] = "Succesfully updated"
        redirect_to show_user_path
@@ -69,7 +69,7 @@ class UsersController < ApplicationController
            flash[:notice] = "You are not authorised to update users password"
          elsif @user.password == params[:exist_password]
              if params[:new_password] == params[:confirm_password]
-               @user.update_attributes(:password => params[:new_password])
+               @user.update_password(params[:new_password])
                    flash[:notice] = "Password updated succesfully"
                redirect_to show_user_path
              else

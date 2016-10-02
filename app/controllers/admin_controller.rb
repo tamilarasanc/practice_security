@@ -4,21 +4,25 @@ class AdminController < ApplicationController
   before_filter :admin_session
   def new
     @user = User.new
-    @action = "create"
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
+    @user = User.create_user(user_params)
+
+    if @user
       redirect_to admin_index_path
+      if params[:user][:admin]
+      flash[:notice] = "Admin creates a user and given admin access"
+      else
+        flash[:notice] = "normal user created by admin successfully"
+      end
     else
-      render 'new'
+      redirect_to :action => 'new'
     end
   end
 
   def edit
       @user = User.find_by_id(params[:id])
-      @action = "update"
       if @user.blank?
         redirect_to root_path
         flash[:notice] = "No user Present"
@@ -27,11 +31,10 @@ class AdminController < ApplicationController
 
   def update
     @user = User.find_by_id(params[:id])
-
     if !@user.blank?
-      @user.update(user_params)
-      flash[:notice] = "Updated Succesfully"
+      @user.update_user(user_params)
       redirect_to admin_index_path
+      flash[:notice] = "Updated Succesfully"
     else
       render 'edit'
     end

@@ -49,8 +49,24 @@ group :development do
   gem 'spring'
 end
 
+gem 'unicorn'
+
 gem 'sunspot_rails', '~> 2.2', '>= 2.2.6'
+
+group :development, :test do
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails', require:  false
+
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'selenium-webdriver'
+
+#  gem 'capybara-webkit'
+  gem 'poltergeist'
+end
 
 group :development do
   gem 'sunspot_solr'
 end
+

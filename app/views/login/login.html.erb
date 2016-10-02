@@ -6,7 +6,7 @@
 
 <h1>Login</h1>
 <div class="red">
-<%= flash[:notice] if flash[:notice] %>
+<p><%= flash[:notice] if flash[:notice] %></p>
 </div>
 <%= form_tag('/login/verify_login') %>
 
@@ -21,6 +21,6 @@
 </p>
 
 <p>
-  <%= submit_tag %>
+  <%= submit_tag 'login' %>
 </p>
 
